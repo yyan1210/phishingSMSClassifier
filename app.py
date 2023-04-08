@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 import pandas as pd
+import nltk
 from sklearn.feature_extraction.text import CountVectorizer
 import re
 from sklearn.naive_bayes import MultinomialNB
