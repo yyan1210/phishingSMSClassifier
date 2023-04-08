@@ -1,6 +1,4 @@
 import streamlit as st
-st.set_option('browser.gatherUsageStats', False)
-
 import pickle
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
