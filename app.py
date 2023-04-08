@@ -10,6 +10,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.exceptions import NotFittedError
 from nltk.corpus import stopwords
 
+nltk.download('stopwords')
+
 # Load the preprocessed data
 df = pd.read_csv('preprocessed_sms.csv')
 
