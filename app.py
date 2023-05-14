@@ -1,7 +1,6 @@
-import streamlit as st
 import pickle
+import streamlit as st
 import pandas as pd
-import nltk
 from sklearn.feature_extraction.text import CountVectorizer
 import re
 from sklearn.naive_bayes import MultinomialNB
@@ -9,8 +8,7 @@ from nltk.stem import PorterStemmer
 from sklearn.model_selection import train_test_split
 from sklearn.exceptions import NotFittedError
 from nltk.corpus import stopwords
-
-nltk.download('stopwords')
+from sklearn.metrics import accuracy_score
 
 # Load the preprocessed data
 df = pd.read_csv('preprocessed_sms.csv')
@@ -36,8 +34,23 @@ with open('nb_classifier-2.pkl', 'rb') as f:
     nb_classifier = pickle.load(f)
     vectorizer = pickle.load(f)
 
+# # Load the preprocessed test data
+# test_data = pd.read_csv('preprocessed_sms.csv')
+# X_test = test_data['sms']
+# y_test = test_data['label']
+
+# # Vectorize the test data using the loaded vectorizer
+# X_test_vectorized = vectorizer.transform(X_test)
+
+# # Use the loaded classifier to predict the class labels of the test data
+# y_pred = nb_classifier.predict(X_test_vectorized)
+
+# # Calculate the accuracy of the classifier
+# accuracy = accuracy_score(y_test, y_pred)
+
+
 def main():
-    st.title("Phishing SMS Classifier")
+    st.title("Phishing SMS Scam Meter")
 
     text = st.text_input("Enter a new SMS to be classified:")
 
@@ -69,7 +82,10 @@ def main():
 
     # Display the predicted label
     if prediction is not None:
+        y_pred = nb_classifier.predict(vectorizer.transform(X_test))
+        accuracy = accuracy_score(y_test, y_pred)
         st.write(f"Prediction: {prediction[0]}")
+        st.write(f"Accuracy: {accuracy:.2f}")
 
 if __name__ == '__main__':
     main()
